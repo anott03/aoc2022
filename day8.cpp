@@ -106,10 +106,11 @@ int main() {
 
   // Part 2
   int maxScore = 0;
-  int i = 3;
-  int j = 2;
-  for (int i = 1; i < DIM-1; ++i) {
-    for (int j = 1; j < DIM-1; ++j) {
+  // for (int i = 1; i < DIM-1; ++i) {
+    // for (int j = 1; j < DIM-1; ++j) {
+  for (auto &pt : *points) {
+      int i = pt.at(0);
+      int j = pt.at(1);
       // up
       int up = 1;
       for (int k = i-1; k >= 0; --k) {
@@ -157,7 +158,7 @@ int main() {
         maxScore = score;
       }
     }
-  }
+  // }
 
   cout << "Part 2 " << maxScore << endl;
 
