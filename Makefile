@@ -207,6 +207,19 @@ out/day8/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day8.dir/build.make CMakeFiles/out/day8.dir/build
 .PHONY : out/day8/fast
 
+#=============================================================================
+# Target rules for targets named out/day9
+
+# Build rule for target.
+out/day9: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 out/day9
+.PHONY : out/day9
+
+# fast build rule for target.
+out/day9/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day9.dir/build.make CMakeFiles/out/day9.dir/build
+.PHONY : out/day9/fast
+
 day1.o: day1.cpp.o
 .PHONY : day1.o
 
@@ -375,6 +388,30 @@ day8.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day8.dir/build.make CMakeFiles/out/day8.dir/day8.cpp.s
 .PHONY : day8.cpp.s
 
+day9.o: day9.cpp.o
+.PHONY : day9.o
+
+# target to build an object file
+day9.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day9.dir/build.make CMakeFiles/out/day9.dir/day9.cpp.o
+.PHONY : day9.cpp.o
+
+day9.i: day9.cpp.i
+.PHONY : day9.i
+
+# target to preprocess a source file
+day9.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day9.dir/build.make CMakeFiles/out/day9.dir/day9.cpp.i
+.PHONY : day9.cpp.i
+
+day9.s: day9.cpp.s
+.PHONY : day9.s
+
+# target to generate assembly for a file
+day9.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/out/day9.dir/build.make CMakeFiles/out/day9.dir/day9.cpp.s
+.PHONY : day9.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -390,6 +427,7 @@ help:
 	@echo "... out/day5"
 	@echo "... out/day6"
 	@echo "... out/day8"
+	@echo "... out/day9"
 	@echo "... day1.o"
 	@echo "... day1.i"
 	@echo "... day1.s"
@@ -411,6 +449,9 @@ help:
 	@echo "... day8.o"
 	@echo "... day8.i"
 	@echo "... day8.s"
+	@echo "... day9.o"
+	@echo "... day9.i"
+	@echo "... day9.s"
 .PHONY : help
 
 
