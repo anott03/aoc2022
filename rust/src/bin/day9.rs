@@ -1,64 +1,15 @@
 use std::{fs, time::Instant};
+
 #[derive(Copy, Clone, PartialEq, Debug)]
 struct Point {
     x: i32, y: i32,
 }
 
-fn abs(x: i32) -> i32 {
-    if x < 0 {
-        return -1 * x;
-    }
-    return x;
-}
-
 fn is_touching(p1: Point, p2: Point) -> bool {
-    if abs(p1.x - p2.x) <= 1 && abs(p1.y - p2.y) <=1 {
+    if (p1.x - p2.x).abs() <= 1 && (p1.y - p2.y).abs() <=1 {
         return true;
     }
     return false;
-}
-
-fn move_first_tail(head: Point, tail: Point) -> Point {
-    let points: Vec<Point> = vec![
-        Point{x: head.x-1, y: head.y},
-        Point{x: head.x+1, y: head.y},
-        Point{x: head.x, y: head.y-1},
-        Point{x: head.x, y: head.y+1},
-    ];
-
-    for point in points {
-        if is_touching(point, tail) {
-            return point;
-        }
-    }
-
-    return tail;
-}
-
-fn move_other_tail(prev: Point, tail: Point) -> Point {
-    let dx = tail.x - prev.x;
-    let dy = tail.y - prev.y;
-
-    if (dx >= 1 && dy >= 1) {
-        
-    }
-
-    return tail;
-}
-
-fn move_head(line: &str, _head: Point) -> Point {
-    let mut head = _head;
-    if line.chars().nth(0) == Some('R') {
-        head.x = _head.x + 1;
-    } else if line.chars().nth(0) == Some('L') {
-        head.x = _head.x - 1;
-    } else if line.chars().nth(0) == Some('U') {
-        head.y = _head.y + 1;
-    } else if line.chars().nth(0) == Some('D') {
-        head.y = _head.y - 1;
-    }
-
-    return head;
 }
 
 fn main() {
@@ -80,7 +31,8 @@ fn main() {
         Point{x: 0, y: 0},
         Point{x: 0, y: 0},
     ];
-    visited_points.push(tails[8]);
+    let tail = &mut tails[0];
+    visited_points.push(Point { x: 0, y: 0 });
 
     contents
         .strip_suffix("\n")
@@ -88,18 +40,26 @@ fn main() {
         .split("\n")
         .for_each(|line| {
             let mag = line[2..line.len()].parse::<i32>().unwrap();
+            let dir = &line[0..1];
 
             for _ in 0..mag {
-                head = move_head(line, head);
-                if is_touching(head, tails[0]) { continue; }
-                tails[0] = move_first_tail(head, tails[0]);
-
-                for i in 1..tails.len() {
-                    tails[i] = move_other_tail(tails[i-1], tails[i]);
+                match dir {
+                    "U" => head.y += 1,
+                    "D" => head.y -= 1,
+                    "L" => head.x -= 1,
+                    "R" => head.x += 1,
+                    &_ => {}
                 }
 
-                if !visited_points.contains(&tails[8]) {
-                    visited_points.push(tails[8]);
+                let dx = head.x - tail.x;
+                let dy = head.y - tail.y;
+                if !is_touching(head, *tail) {
+                    tail.x += dx.signum();
+                    tail.y += dy.signum();
+
+                    if !visited_points.contains(tail) {
+                        visited_points.push(Point{ x: tail.x, y: tail.y });
+                    }
                 }
             }
         });
