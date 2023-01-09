@@ -20,17 +20,7 @@ fn main() {
 
     let mut visited_points: Vec<Point> = Vec::new();
     let mut head = Point { x: 0, y: 0 };
-    let mut tails = [
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
-    ];
+    let mut tails = [Point{x: 0, y: 0}; 9];
     let tail = &mut tails[0];
     visited_points.push(Point { x: 0, y: 0 });
 
