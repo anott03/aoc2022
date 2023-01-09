@@ -18,19 +18,32 @@ fn is_touching(p1: Point, p2: Point) -> bool {
     return false;
 }
 
-fn move_tail(head: Point, tail: Point) -> Point {
-    // let points: Vec<Point> = vec![
-        // Point{x: head.x-1, y: head.y},
-        // Point{x: head.x+1, y: head.y},
-        // Point{x: head.x, y: head.y-1},
-        // Point{x: head.x, y: head.y+1},
-    // ];
+fn move_first_tail(head: Point, tail: Point) -> Point {
+    let points: Vec<Point> = vec![
+        Point{x: head.x-1, y: head.y},
+        Point{x: head.x+1, y: head.y},
+        Point{x: head.x, y: head.y-1},
+        Point{x: head.x, y: head.y+1},
+    ];
 
-    // for point in points {
-        // if is_touching(point, tail) {
-            // return point;
-        // }
-    // }
+    for point in points {
+        if is_touching(point, tail) {
+            return point;
+        }
+    }
+
+    return tail;
+}
+
+fn move_other_tail(prev: Point, tail: Point) -> Point {
+    let dx = tail.x - prev.x;
+    let dy = tail.y - prev.y;
+
+    if (dx >= 1 && dy >= 1) {
+        
+    }
+
+    return tail;
 }
 
 fn move_head(line: &str, _head: Point) -> Point {
@@ -66,36 +79,33 @@ fn main() {
         Point{x: 0, y: 0},
         Point{x: 0, y: 0},
         Point{x: 0, y: 0},
-        Point{x: 0, y: 0},
     ];
-    visited_points.push(tails[9]);
+    visited_points.push(tails[8]);
 
     contents
         .strip_suffix("\n")
         .unwrap()
         .split("\n")
-        .into_iter()
         .for_each(|line| {
             let mag = line[2..line.len()].parse::<i32>().unwrap();
 
             for _ in 0..mag {
                 head = move_head(line, head);
                 if is_touching(head, tails[0]) { continue; }
-                tails[0] = move_tail(head, tails[0]);
+                tails[0] = move_first_tail(head, tails[0]);
 
                 for i in 1..tails.len() {
-                    if !is_touching(tails[i-1], tails[i]) {
-                        tails[i] = move_tail(tails[i-1], tails[i]);
-                    }
+                    tails[i] = move_other_tail(tails[i-1], tails[i]);
                 }
 
-                if !visited_points.contains(&tails[9]) {
-                    visited_points.push(tails[9]);
+                if !visited_points.contains(&tails[8]) {
+                    visited_points.push(tails[8]);
                 }
             }
         });
 
     // 2608 too small
+    // visited_points.iter().for_each(|point| println!("{:?}", point));
     println!("Answer: {}", visited_points.len());
     println!("Time elapsed {}", start.elapsed().as_millis());
 }
